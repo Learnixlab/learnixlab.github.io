@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learnix Research Lab</title>
+<link rel="icon" type="Certification\logo.png" sizes="32x32" href="logo.png">
+<link rel="icon" type="Certification\logo.png" sizes="16x16" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --navy:#0d1b3e;
+    --blue:#1a56db;
+    --mid:#2563eb;
+    --cyan:#06b6d4;
+    --teal:#14b8a6;
+    --light-blue:#e0f2fe;
+    --white:#ffffff;
+    --off:#f8fafc;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--white);line-height:1.6;overflow-x:hidden}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,27,62,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08)}
+  .nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .nav-logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--blue),var(--cyan));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:#fff;font-size:14px;letter-spacing:-1px}
+  .nav-logo-text{font-family:'Syne',sans-serif;font-weight:700;color:#fff;font-size:1.1rem;letter-spacing:0.5px}
+  .nav-logo-text span{color:var(--cyan)}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:0.9rem;font-weight:400;letter-spacing:0.3px;transition:color 0.2s}
+  .nav-links a:hover{color:var(--cyan)}
+  .nav-cta{background:linear-gradient(90deg,var(--blue),var(--cyan));color:#fff;padding:0.45rem 1.2rem;border-radius:6px;text-decoration:none;font-size:0.88rem;font-weight:500;transition:opacity 0.2s}
+  .nav-cta:hover{opacity:0.88}
+
+  /* HERO */
+  .hero{min-height:100vh;background:var(--navy);position:relative;display:flex;align-items:center;overflow:hidden;padding-top:68px}
+  .hero-bg{position:absolute;inset:0;background:
+    radial-gradient(ellipse 700px 500px at 80% 50%, rgba(37,99,235,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 400px 400px at 20% 80%, rgba(6,182,212,0.1) 0%, transparent 60%)}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:50px 50px}
+  .hero-inner{max-width:1200px;margin:0 auto;padding:4rem 2rem;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.3);color:var(--cyan);padding:0.4rem 0.9rem;border-radius:100px;font-size:0.8rem;font-weight:500;letter-spacing:0.5px;margin-bottom:1.5rem}
+  .hero-tag::before{content:'';width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+  .hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.4rem,5vw,3.6rem);font-weight:800;color:#fff;line-height:1.1;margin-bottom:1.2rem;letter-spacing:-1px}
+  .hero h1 .accent{background:linear-gradient(90deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero-sub{font-size:1.05rem;color:rgba(255,255,255,0.65);font-weight:300;margin-bottom:2rem;max-width:480px;line-height:1.8}
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn-primary{background:linear-gradient(90deg,var(--blue),var(--cyan));color:#fff;padding:0.8rem 1.8rem;border-radius:8px;text-decoration:none;font-weight:500;font-size:0.95rem;transition:transform 0.2s,opacity 0.2s;display:inline-flex;align-items:center;gap:8px}
+  .btn-primary:hover{transform:translateY(-2px);opacity:0.92}
+  .btn-outline{border:1px solid rgba(255,255,255,0.25);color:#fff;padding:0.8rem 1.8rem;border-radius:8px;text-decoration:none;font-weight:400;font-size:0.95rem;transition:border-color 0.2s,background 0.2s}
+  .btn-outline:hover{border-color:var(--cyan);background:rgba(6,182,212,0.08)}
+  .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;padding-top:3rem;border-top:1px solid rgba(255,255,255,0.08)}
+  .stat-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#fff;line-height:1}
+  .stat-val span{background:linear-gradient(90deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .stat-label{font-size:0.82rem;color:rgba(255,255,255,0.5);margin-top:4px;font-weight:300}
+
+  /* HERO VISUAL */
+  .hero-visual{position:relative}
+  .hero-card-main{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:2rem;backdrop-filter:blur(10px)}
+  .hero-card-main h3{font-family:'Syne',sans-serif;color:#fff;font-size:1rem;margin-bottom:1rem;font-weight:600}
+  .research-pill{display:inline-flex;align-items:center;gap:6px;padding:0.35rem 0.8rem;border-radius:100px;font-size:0.8rem;font-weight:500;margin:4px;border:1px solid}
+  .pill-blue{background:rgba(37,99,235,0.2);border-color:rgba(37,99,235,0.4);color:#93c5fd}
+  .pill-cyan{background:rgba(6,182,212,0.15);border-color:rgba(6,182,212,0.35);color:#67e8f9}
+  .pill-teal{background:rgba(20,184,166,0.15);border-color:rgba(20,184,166,0.35);color:#5eead4}
+  .hero-card-float{position:absolute;right:-20px;bottom:-30px;background:rgba(13,27,62,0.9);border:1px solid rgba(6,182,212,0.3);border-radius:12px;padding:1rem 1.2rem;backdrop-filter:blur(10px);min-width:180px}
+  .float-label{font-size:0.72rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .float-value{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;color:var(--cyan)}
+  .float-sub{font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:2px}
+
+  /* SECTIONS */
+  section{padding:5rem 0}
+  .container{max-width:1200px;margin:0 auto;padding:0 2rem}
+  .section-tag{display:inline-block;background:var(--light-blue);color:var(--mid);font-size:0.78rem;font-weight:600;padding:0.3rem 0.8rem;border-radius:100px;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem}
+  .section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:0.8rem}
+  .section-sub{color:var(--muted);font-size:1rem;font-weight:300;max-width:550px;line-height:1.8}
+
+  /* ABOUT */
+  .about{background:var(--off)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  .about-left{}
+  .about-pillars{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+  .pillar{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.2rem;transition:border-color 0.2s,transform 0.2s}
+  .pillar:hover{border-color:var(--mid);transform:translateY(-3px)}
+  .pillar-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:0.7rem;font-size:1rem}
+  .pillar-icon.blue{background:rgba(37,99,235,0.1)}
+  .pillar-icon.cyan{background:rgba(6,182,212,0.1)}
+  .pillar h4{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;color:var(--navy);margin-bottom:4px}
+  .pillar p{font-size:0.82rem;color:var(--muted);line-height:1.6}
+  .about-visual{background:linear-gradient(135deg,var(--navy),#1e3a8a);border-radius:20px;padding:2.5rem;color:#fff;position:relative;overflow:hidden}
+  .about-visual::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(6,182,212,0.15)}
+  .about-visual h3{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;position:relative}
+  .mission-item{display:flex;gap:12px;margin-bottom:1.2rem;position:relative}
+  .mission-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);flex-shrink:0;margin-top:6px}
+  .mission-text{font-size:0.9rem;color:rgba(255,255,255,0.8);line-height:1.7}
+
+  /* RESEARCH */
+  .research-areas{}
+  .research-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+  .research-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.8rem;transition:all 0.25s;position:relative;overflow:hidden;cursor:default}
+  .research-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));transform:scaleX(0);transition:transform 0.3s;transform-origin:left}
+  .research-card:hover{border-color:rgba(37,99,235,0.3);transform:translateY(-4px);box-shadow:0 12px 40px rgba(13,27,62,0.1)}
+  .research-card:hover::before{transform:scaleX(1)}
+  .research-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem}
+  .research-card h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:0.6rem}
+  .research-card p{font-size:0.86rem;color:var(--muted);line-height:1.7}
+  .research-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem}
+  .rtag{font-size:0.74rem;padding:0.2rem 0.6rem;border-radius:100px;background:var(--light-blue);color:var(--mid);font-weight:500}
+
+  /* TEAM */
+  .team{background:var(--navy);color:#fff}
+  .team .section-title{color:#fff}
+  .team .section-sub{color:rgba(255,255,255,0.6)}
+  .team .section-tag{background:rgba(6,182,212,0.15);color:var(--cyan)}
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem}
+  .team-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:1.5rem;text-align:center;transition:border-color 0.2s,background 0.2s}
+  .team-card:hover{border-color:rgba(6,182,212,0.4);background:rgba(255,255,255,0.07)}
+  .team-avatar{width:70px;height:70px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:#fff}
+  .avatar-blue{background:linear-gradient(135deg,var(--blue),var(--cyan))}
+  .avatar-teal{background:linear-gradient(135deg,var(--teal),var(--cyan))}
+  .avatar-navy{background:linear-gradient(135deg,#1e3a8a,var(--blue))}
+  .avatar-grad{background:linear-gradient(135deg,#7c3aed,var(--blue))}
+  .team-card h4{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:4px}
+  .team-card .role{font-size:0.8rem;color:var(--cyan);font-weight:400;margin-bottom:8px}
+  .team-card .dept{font-size:0.78rem;color:rgba(255,255,255,0.45);line-height:1.5}
+
+  /* PUBLICATIONS */
+  .publications{background:var(--off)}
+  .pub-list{display:flex;flex-direction:column;gap:1rem;margin-top:2.5rem}
+  .pub-item{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.4rem 1.6rem;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;transition:border-color 0.2s}
+  .pub-item:hover{border-color:var(--mid)}
+  .pub-year{font-size:0.78rem;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+  .pub-title{font-family:'Syne',sans-serif;font-size:0.98rem;font-weight:700;color:var(--navy);margin-bottom:6px;line-height:1.4}
+  .pub-authors{font-size:0.82rem;color:var(--muted)}
+  .pub-badge{font-size:0.74rem;padding:0.3rem 0.75rem;border-radius:100px;font-weight:600;white-space:nowrap;align-self:start}
+  .badge-journal{background:#dcfce7;color:#15803d}
+  .badge-conf{background:#dbeafe;color:#1d4ed8}
+  .badge-preprint{background:#fef9c3;color:#92400e}
+
+  /* JOIN US */
+  .join{background:var(--navy);padding:5rem 0}
+  .join .section-title{color:#fff}
+  .join .section-sub{color:rgba(255,255,255,0.6)}
+  .join .section-tag{background:rgba(6,182,212,0.15);color:var(--cyan)}
+  .join-intro{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:4rem}
+  .join-why{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:2rem}
+  .join-why h3{font-family:'Syne',sans-serif;color:#fff;font-size:1rem;font-weight:700;margin-bottom:1.2rem}
+  .why-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:1rem}
+  .why-check{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:0.65rem;color:#fff;font-weight:700}
+  .why-text{font-size:0.88rem;color:rgba(255,255,255,0.75);line-height:1.6}
+  .why-text strong{color:#fff;font-weight:500}
+  .positions-title{font-family:'Syne',sans-serif;color:#fff;font-size:1.3rem;font-weight:700;margin-bottom:1.5rem}
+  .positions-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:3rem}
+  .position-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:1.5rem;transition:all 0.25s;cursor:default}
+  .position-card:hover{border-color:rgba(6,182,212,0.5);background:rgba(6,182,212,0.06);transform:translateY(-3px)}
+  .pos-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.8rem}
+  .pos-title{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:#fff}
+  .pos-badge{font-size:0.7rem;padding:0.25rem 0.65rem;border-radius:100px;font-weight:600;flex-shrink:0}
+  .badge-open{background:rgba(16,185,129,0.2);color:#6ee7b7;border:1px solid rgba(16,185,129,0.3)}
+  .badge-rolling{background:rgba(6,182,212,0.2);color:#67e8f9;border:1px solid rgba(6,182,212,0.3)}
+  .badge-funded{background:rgba(250,204,21,0.15);color:#fde68a;border:1px solid rgba(250,204,21,0.25)}
+  .pos-desc{font-size:0.83rem;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:1rem}
+  .pos-tags{display:flex;flex-wrap:wrap;gap:5px}
+  .pos-tag{font-size:0.72rem;padding:0.18rem 0.55rem;border-radius:100px;background:rgba(37,99,235,0.2);color:#93c5fd;border:1px solid rgba(37,99,235,0.3)}
+  .apply-cta{background:linear-gradient(135deg,rgba(37,99,235,0.15),rgba(6,182,212,0.15));border:1px solid rgba(6,182,212,0.3);border-radius:16px;padding:2.5rem;text-align:center;margin-top:1rem}
+  .apply-cta h3{font-family:'Syne',sans-serif;color:#fff;font-size:1.3rem;font-weight:700;margin-bottom:0.8rem}
+  .apply-cta p{color:rgba(255,255,255,0.6);font-size:0.9rem;margin-bottom:1.5rem;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.8}
+  .apply-steps{display:flex;justify-content:center;gap:0;margin-bottom:2rem;flex-wrap:wrap}
+  .apply-step{display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 1.5rem;position:relative}
+  .apply-step:not(:last-child)::after{content:'→';position:absolute;right:-0.5rem;top:12px;color:var(--cyan);font-size:1rem}
+  .step-num{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:#fff}
+  .step-label{font-size:0.75rem;color:rgba(255,255,255,0.6);text-align:center;max-width:80px}
+  .apply-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(90deg,var(--blue),var(--cyan));color:#fff;padding:0.9rem 2.2rem;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.95rem;transition:transform 0.2s,opacity 0.2s}
+  .apply-btn:hover{transform:translateY(-2px);opacity:0.9}
+
+  /* CONTACT */
+  .contact{background:var(--white)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem}
+  .contact-info h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:1rem}
+  .contact-info p{color:var(--muted);font-size:0.95rem;line-height:1.8;margin-bottom:1.5rem}
+  .contact-detail{display:flex;gap:12px;align-items:flex-start;margin-bottom:1rem}
+  .cd-icon{width:36px;height:36px;background:var(--light-blue);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.9rem}
+  .cd-text .label{font-size:0.75rem;color:var(--muted);margin-bottom:2px}
+  .cd-text .value{font-size:0.9rem;color:var(--text);font-weight:500}
+  .contact-form{}
+  .form-group{margin-bottom:1.2rem}
+  .form-group label{display:block;font-size:0.82rem;font-weight:500;color:var(--text);margin-bottom:6px}
+  .form-group input,.form-group textarea,.form-group select{width:100%;padding:0.75rem 1rem;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--text);background:#fff;transition:border-color 0.2s,box-shadow 0.2s;outline:none}
+  .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--mid);box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
+  .form-group textarea{resize:vertical;min-height:100px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .submit-btn{background:linear-gradient(90deg,var(--blue),var(--cyan));color:#fff;padding:0.85rem 2rem;border-radius:8px;border:none;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:500;cursor:pointer;width:100%;transition:opacity 0.2s,transform 0.2s}
+  .submit-btn:hover{opacity:0.9;transform:translateY(-1px)}
+
+  /* FOOTER */
+  footer{background:var(--navy);color:rgba(255,255,255,0.6);padding:3rem 0 2rem}
+  .footer-inner{max-width:1200px;margin:0 auto;padding:0 2rem}
+  .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+  .footer-brand p{font-size:0.85rem;line-height:1.7;margin-top:0.8rem;color:rgba(255,255,255,0.5);max-width:280px}
+  .footer-col h5{font-family:'Syne',sans-serif;color:#fff;font-size:0.88rem;font-weight:700;margin-bottom:1rem;letter-spacing:0.5px}
+  .footer-col ul{list-style:none}
+  .footer-col ul li{margin-bottom:0.6rem}
+  .footer-col ul li a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.84rem;transition:color 0.2s}
+  .footer-col ul li a:hover{color:var(--cyan)}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:1.5rem;font-size:0.8rem}
+  .footer-bottom a{color:var(--cyan);text-decoration:none}
+  .tagline-bar{background:linear-gradient(90deg,var(--blue),var(--cyan));padding:0.9rem 0;text-align:center}
+  .tagline-bar p{font-family:'Syne',sans-serif;color:#fff;font-size:0.88rem;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+
+  @media(max-width:900px){
+    .hero-inner{grid-template-columns:1fr}
+    .hero-visual{display:none}
+    .about-grid{grid-template-columns:1fr}
+    .research-grid{grid-template-columns:1fr 1fr}
+    .team-grid{grid-template-columns:1fr 1fr}
+    .contact-grid{grid-template-columns:1fr}
+    .footer-top{grid-template-columns:1fr 1fr}
+    .nav-links{display:none}
+  }
+  @media(max-width:600px){
+    .research-grid{grid-template-columns:1fr}
+    .team-grid{grid-template-columns:1fr 1fr}
+    .about-pillars{grid-template-columns:1fr}
+    .join-intro{grid-template-columns:1fr}
+    .positions-grid{grid-template-columns:1fr}
+    .apply-steps{gap:0.5rem}
+    .hero-stats{grid-template-columns:1fr 1fr}
+  }
+  .menu-toggle {
+  display: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+@media(max-width:900px){
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    background: #0d1b3e;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <a href="#home" class="nav-logo">
+      <div class="nav-logo-mark">LR</div>
+      <span class="nav-logo-text">LEARNIX <span>LAB</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#join">Join Us</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="learnix-certificate-verify.html">Certification Verify</a></li>
+    </ul>
+    <a href="#join" class="nav-cta">Apply Now →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag">🔬 Learnix Research Lab · Est. 2024</div>
+      <h1>Learning Today,<br><span class="accent">Innovating</span><br>Tomorrow</h1>
+      <p class="hero-sub">A multidisciplinary research lab at the intersection of machine intelligence, human learning, and data-driven discovery — pushing the boundaries of what's possible.</p>
+      <div class="hero-actions">
+        <a href="#join" class="btn-primary">Join Our Lab ↓</a>
+        <a href="#research" class="btn-outline">Explore Research</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-val"><span>12+</span></div>
+          <div class="stat-label">Research Projects</div>
+        </div>
+        <div>
+          <div class="stat-val"><span>30+</span></div>
+          <div class="stat-label">Publications</div>
+        </div>
+        <div>
+          <div class="stat-val"><span>15</span></div>
+          <div class="stat-label">Team Members</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card-main">
+        <h3>🧠 Active Research Domains</h3>
+        <div>
+          <span class="research-pill pill-blue">Machine Learning</span>
+          <span class="research-pill pill-cyan">Natural Language Processing</span>
+          <span class="research-pill pill-teal">Cognitive Science</span>
+          <span class="research-pill pill-blue">Adaptive Learning</span>
+          <span class="research-pill pill-cyan">Knowledge Graphs</span>
+          <span class="research-pill pill-teal">Computer Vision</span>
+          <span class="research-pill pill-blue">Data Analytics</span>
+          <span class="research-pill pill-cyan">AI Ethics</span>
+          <span class="research-pill pill-teal">EdTech Innovation</span>
+        </div>
+      </div>
+      <div class="hero-card-float">
+        <div class="float-label">Publications</div>
+        <div class="float-value">30+</div>
+        <div class="float-sub">peer-reviewed papers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAGLINE BAR -->
+<div class="tagline-bar">
+  <p>— Learn · Discover · Innovate —</p>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-left">
+        <span class="section-tag">Who We Are</span>
+        <h2 class="section-title">A Lab Built for the Future of Knowledge</h2>
+        <p class="section-sub">Learnix Research Lab is a forward-thinking research group dedicated to advancing the science of learning through rigorous inquiry, cutting-edge technology, and cross-disciplinary collaboration.</p>
+        <div class="about-pillars">
+          <div class="pillar">
+            <div class="pillar-icon blue">🔬</div>
+            <h4>Rigorous Research</h4>
+            <p>Evidence-based methodology and peer-reviewed output across all domains.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon cyan">🤝</div>
+            <h4>Collaboration</h4>
+            <p>Partnering with universities, industry, and government worldwide.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon blue">💡</div>
+            <h4>Innovation</h4>
+            <p>Translating research into real-world solutions that make an impact.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon cyan">🎓</div>
+            <h4>Education</h4>
+            <p>Mentoring the next generation of researchers and thinkers.</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual">
+        <h3>🎯 Our Mission & Vision</h3>
+        <div class="mission-item">
+          <div class="mission-dot"></div>
+          <div class="mission-text">To advance human understanding through innovative research at the intersection of learning science and artificial intelligence.</div>
+        </div>
+        <div class="mission-item">
+          <div class="mission-dot"></div>
+          <div class="mission-text">To develop intelligent systems that augment human capabilities and democratize access to knowledge globally.</div>
+        </div>
+        <div class="mission-item">
+          <div class="mission-dot"></div>
+          <div class="mission-text">To foster an inclusive, collaborative, and ethics-first research culture that benefits society at large.</div>
+        </div>
+        <div class="mission-item">
+          <div class="mission-dot"></div>
+          <div class="mission-text">To bridge the gap between foundational research and practical applications in education, healthcare, and industry.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH AREAS -->
+<section id="research" class="research-areas">
+  <div class="container">
+    <span class="section-tag">What We Study</span>
+    <h2 class="section-title">Research Areas</h2>
+    <p class="section-sub">Our work spans six core domains, each connecting the science of learning with the frontiers of intelligent systems.</p>
+    <div class="research-grid">
+      <div class="research-card">
+        <div class="research-icon" style="background:rgba(37,99,235,0.1)">🤖</div>
+        <h3>Machine Learning & AI</h3>
+        <p>Developing novel ML algorithms, deep learning architectures, and scalable AI systems for intelligent decision-making and prediction.</p>
+        <div class="research-tags">
+          <span class="rtag">Deep Learning</span>
+          <span class="rtag">Reinforcement Learning</span>
+          <span class="rtag">AutoML</span>
+        </div>
+      </div>
+      <div class="research-card">
+        <div class="research-icon" style="background:rgba(6,182,212,0.1)">📚</div>
+        <h3>Natural Language Processing</h3>
+        <p>Advancing NLP methods for text understanding, semantic analysis, language generation, and multilingual processing.</p>
+        <div class="research-tags">
+          <span class="rtag">LLMs</span>
+          <span class="rtag">Sentiment Analysis</span>
+          <span class="rtag">NER</span>
+        </div>
+      </div>
+      <div class="research-card">
+        <div class="research-icon" style="background:rgba(20,184,166,0.1)">🧠</div>
+        <h3>Cognitive Science</h3>
+        <p>Exploring how humans learn, remember, and reason — bridging psychology, neuroscience, and AI to understand intelligence.</p>
+        <div class="research-tags">
+          <span class="rtag">Memory</span>
+          <span class="rtag">Reasoning</span>
+          <span class="rtag">Metacognition</span>
+        </div>
+      </div>
+      <div class="research-card">
+        <div class="research-icon" style="background:rgba(37,99,235,0.1)">📊</div>
+        <h3>Data Science & Analytics</h3>
+        <p>Turning raw data into actionable insight through statistical modeling, visualization, and advanced analytics pipelines.</p>
+        <div class="research-tags">
+          <span class="rtag">Predictive Modeling</span>
+          <span class="rtag">Data Mining</span>
+          <span class="rtag">Viz</span>
+        </div>
+      </div>
+      <div class="research-card">
+        <div class="research-icon" style="background:rgba(6,182,212,0.1)">🎓</div>
+        <h3>Educational Technology</h3>
+        <p>Designing intelligent tutoring systems, adaptive learning platforms, and tools that personalize education at scale.</p>
+        <div class="research-tags">
+          <span class="rtag">Adaptive Learning</span>
+          <span class="rtag">ITS</span>
+          <span class="rtag">EdTech</span>
+        </div>
+      </div>
+      <div class="research-card">
+        <div class="research-icon" style="background:rgba(20,184,166,0.1)">⚖️</div>
+        <h3>AI Ethics & Fairness</h3>
+        <p>Ensuring AI systems are transparent, equitable, and aligned with human values — from bias detection to explainability.</p>
+        <div class="research-tags">
+          <span class="rtag">Bias Mitigation</span>
+          <span class="rtag">Explainability</span>
+          <span class="rtag">Safety</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="team">
+  <div class="container">
+    <span class="section-tag">Our People</span>
+    <h2 class="section-title">Meet the Team</h2>
+    <p class="section-sub">A diverse group of researchers, engineers, and thinkers united by a passion for discovery.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar avatar-blue">DR</div>
+        <h4>Dr. Rahman</h4>
+        <div class="role">Principal Investigator</div>
+        <div class="dept">Machine Learning & AI Systems</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar avatar-teal">SA</div>
+        <h4>Dr. S. Ahmed</h4>
+        <div class="role">Senior Researcher</div>
+        <div class="dept">Natural Language Processing</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar avatar-navy">NK</div>
+        <h4>N. Khan</h4>
+        <div class="role">Research Associate</div>
+        <div class="dept">Cognitive Science</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar avatar-grad">FH</div>
+        <h4>F. Hossain</h4>
+        <div class="role">PhD Researcher</div>
+        <div class="dept">AI Ethics & Fairness</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar avatar-cyan" style="background:linear-gradient(135deg,#0891b2,#06b6d4)">MI</div>
+        <h4>M. Islam</h4>
+        <div class="role">Data Scientist</div>
+        <div class="dept">Data Analytics</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar avatar-blue">TC</div>
+        <h4>T. Chowdhury</h4>
+        <div class="role">Research Engineer</div>
+        <div class="dept">Educational Technology</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar avatar-teal">RP</div>
+        <h4>R. Paul</h4>
+        <div class="role">MSc Researcher</div>
+        <div class="dept">Computer Vision</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar avatar-grad">ZA</div>
+        <h4>Z. Akter</h4>
+        <div class="role">Lab Coordinator</div>
+        <div class="dept">Operations & Outreach</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications" class="publications">
+  <div class="container">
+    <span class="section-tag">Recent Work</span>
+    <h2 class="section-title">Selected Publications</h2>
+    <p class="section-sub">Peer-reviewed research spanning AI, learning science, and data-driven systems.</p>
+    <div class="pub-list">
+      <div class="pub-item">
+        <div>
+          <div class="pub-year">2025 · NeurIPS</div>
+          <div class="pub-title">Adaptive Knowledge Distillation for Low-Resource Language Models in Educational Contexts</div>
+          <div class="pub-authors">Rahman, S. Ahmed, N. Khan, F. Hossain</div>
+        </div>
+        <span class="pub-badge badge-conf">Conference</span>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-year">2025 · Nature Machine Intelligence</div>
+          <div class="pub-title">Towards Equitable AI: A Framework for Detecting and Mitigating Bias in Adaptive Learning Systems</div>
+          <div class="pub-authors">F. Hossain, Rahman, M. Islam</div>
+        </div>
+        <span class="pub-badge badge-journal">Journal</span>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-year">2024 · EMNLP</div>
+          <div class="pub-title">Cross-Lingual Knowledge Graphs for Semantic Understanding in Multi-Domain NLP Tasks</div>
+          <div class="pub-authors">S. Ahmed, N. Khan, T. Chowdhury</div>
+        </div>
+        <span class="pub-badge badge-conf">Conference</span>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-year">2024 · arXiv Preprint</div>
+          <div class="pub-title">Metacognitive Scaffolding in Intelligent Tutoring Systems: A Cognitive Science Perspective</div>
+          <div class="pub-authors">N. Khan, Rahman, R. Paul</div>
+        </div>
+        <span class="pub-badge badge-preprint">Preprint</span>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-year">2024 · ICML</div>
+          <div class="pub-title">Reinforcement Learning from Human Feedback for Personalized Curriculum Generation</div>
+          <div class="pub-authors">Rahman, F. Hossain, Z. Akter, M. Islam</div>
+        </div>
+        <span class="pub-badge badge-conf">Conference</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN US -->
+<section id="join" class="join">
+  <div class="container">
+    <span class="section-tag">Join the Lab</span>
+    <h2 class="section-title">Shape the Future of Learning Science</h2>
+    <p class="section-sub">We're looking for curious, driven individuals — from undergraduates to postdocs — ready to tackle hard problems and make a real impact.</p>
+
+    <div class="join-intro">
+      <div>
+        <p style="color:rgba(255,255,255,0.7);font-size:1rem;line-height:1.8;margin-bottom:1.5rem">Learnix Research Lab is a growing, welcoming environment where ideas are valued, collaboration is encouraged, and every member contributes meaningfully to our research mission.</p>
+        <p style="color:rgba(255,255,255,0.55);font-size:0.9rem;line-height:1.8">We accept applications on a rolling basis for most positions. Funded opportunities are competitive and reviewed each semester. Don't see the right fit? Reach out anyway — we always welcome motivated candidates.</p>
+      </div>
+      <div class="join-why">
+        <h3>✨ Why Join Learnix?</h3>
+        <div class="why-item">
+          <div class="why-check">✓</div>
+          <div class="why-text"><strong>Publish at top venues</strong> — NeurIPS, ICML, EMNLP, Nature MI and more.</div>
+        </div>
+        <div class="why-item">
+          <div class="why-check">✓</div>
+          <div class="why-text"><strong>Hands-on mentorship</strong> from experienced researchers from day one.</div>
+        </div>
+        <div class="why-item">
+          <div class="why-check">✓</div>
+          <div class="why-text"><strong>Interdisciplinary exposure</strong> — AI, cognitive science, data, EdTech, and ethics.</div>
+        </div>
+        <div class="why-item">
+          <div class="why-check">✓</div>
+          <div class="why-text"><strong>Conference travel support</strong> for presenting accepted work.</div>
+        </div>
+        <div class="why-item">
+          <div class="why-check">✓</div>
+          <div class="why-text"><strong>Inclusive culture</strong> — we welcome researchers from all backgrounds.</div>
+        </div>
+        <div class="why-item">
+          <div class="why-check">✓</div>
+          <div class="why-text"><strong>Real-world impact</strong> — research that shapes education and AI policy.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="positions-title">📋 Open Positions</div>
+    <div class="positions-grid">
+      <div class="position-card">
+        <div class="pos-header">
+          <div class="pos-title">PhD Researcher</div>
+          <span class="pos-badge badge-funded">Funded</span>
+        </div>
+        <div class="pos-desc">Pursue a fully-funded PhD in AI, NLP, or cognitive science. Work on cutting-edge projects, publish at top venues, and contribute to the lab's long-term research agenda.</div>
+        <div class="pos-tags">
+          <span class="pos-tag">3–4 years</span>
+          <span class="pos-tag">Stipend Included</span>
+          <span class="pos-tag">Full-time</span>
+        </div>
+      </div>
+      <div class="position-card">
+        <div class="pos-header">
+          <div class="pos-title">MSc Research Student</div>
+          <span class="pos-badge badge-open">Open</span>
+        </div>
+        <div class="pos-desc">Conduct a focused research thesis within one of our active domains. Ideal for graduates with a strong CS or data science background looking to enter research.</div>
+        <div class="pos-tags">
+          <span class="pos-tag">1–2 years</span>
+          <span class="pos-tag">Part/Full-time</span>
+          <span class="pos-tag">Supervised</span>
+        </div>
+      </div>
+      <div class="position-card">
+        <div class="pos-header">
+          <div class="pos-title">Research Internship</div>
+          <span class="pos-badge badge-rolling">Rolling</span>
+        </div>
+        <div class="pos-desc">A 3–6 month structured internship for undergraduate or MSc students. Gain research experience, co-author papers, and build your academic portfolio.</div>
+        <div class="pos-tags">
+          <span class="pos-tag">3–6 months</span>
+          <span class="pos-tag">Paid</span>
+          <span class="pos-tag">Hybrid / Remote</span>
+        </div>
+      </div>
+      <div class="position-card">
+        <div class="pos-header">
+          <div class="pos-title">Research Engineer</div>
+          <span class="pos-badge badge-open">Open</span>
+        </div>
+        <div class="pos-desc">Build and maintain the systems, pipelines, and tools that power our research. Strong ML engineering or software background required.</div>
+        <div class="pos-tags">
+          <span class="pos-tag">Full-time</span>
+          <span class="pos-tag">Python / ML</span>
+          <span class="pos-tag">Competitive Pay</span>
+        </div>
+      </div>
+      <div class="position-card">
+        <div class="pos-header">
+          <div class="pos-title">Visiting Researcher</div>
+          <span class="pos-badge badge-rolling">Rolling</span>
+        </div>
+        <div class="pos-desc">Researchers from other institutions are welcome to collaborate with us for short-term visits. We support joint projects and co-authorship arrangements.</div>
+        <div class="pos-tags">
+          <span class="pos-tag">1–3 months</span>
+          <span class="pos-tag">Collaborative</span>
+          <span class="pos-tag">Open to All</span>
+        </div>
+      </div>
+      <div class="position-card">
+        <div class="pos-header">
+          <div class="pos-title">Undergraduate Researcher</div>
+          <span class="pos-badge badge-rolling">Rolling</span>
+        </div>
+        <div class="pos-desc">Get a head start on your research career. Work alongside PhD students on active projects, learn research methodology, and contribute to publications.</div>
+        <div class="pos-tags">
+          <span class="pos-tag">Part-time</span>
+          <span class="pos-tag">Flexible Hours</span>
+          <span class="pos-tag">Mentored</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="apply-cta">
+      <h3>Ready to Apply?</h3>
+      <p>Send us your CV, a brief statement of research interest, and any relevant work. We review applications on a rolling basis and aim to respond within two weeks.</p>
+      <div class="apply-steps">
+        <div class="apply-step">
+          <div class="step-num">1</div>
+          <div class="step-label">Prepare your CV & statement</div>
+        </div>
+        <div class="apply-step">
+          <div class="step-num">2</div>
+          <div class="step-label">Email to learnixresearchlab@gmail.com</div>
+        </div>
+        <div class="apply-step">
+          <div class="step-num">3</div>
+          <div class="step-label">Interview & lab visit</div>
+        </div>
+        <div class="apply-step">
+          <div class="step-num">4</div>
+          <div class="step-label">Welcome to the lab!</div>
+        </div>
+      </div>
+      <a href="mailto:Learnixresearchlab@gmail.com" class="apply-btn">Apply Now → Learnixresearchlab@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="container">
+    <span class="section-tag">Get in Touch</span>
+    <h2 class="section-title">Let's Work Together</h2>
+    <p class="section-sub">Whether you're a researcher, student, or industry partner — we'd love to hear from you.</p>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Reach Learnix Research Lab</h3>
+        <p>We welcome collaboration proposals, research inquiries, and student applications. Our team typically responds within 2–3 business days.</p>
+        <div class="contact-detail">
+          <div class="cd-icon">📍</div>
+          <div class="cd-text">
+            <div class="label">Location</div>
+            <div class="value">Dhaka, Bangladesh</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">📧</div>
+          <div class="cd-text">
+            <div class="label">Email</div>
+            <div class="value">learnixresearchlab@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">🌐</div>
+          <div class="cd-text">
+            <div class="label">Website</div>
+            <div class="value">https://github.com/Learnix-Research-Lab</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">📞</div>
+          <div class="cd-text">
+            <div class="label">Phone</div>
+            <div class="value">+880 1729133240</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="e.g. Arif">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="e.g. Hossain">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@email.com">
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <select>
+            <option>Collaboration Inquiry</option>
+            <option>Research Partnership</option>
+            <option>Join the Lab</option>
+            <option>Publication / Media</option>
+            <option>General Question</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us about your interest or inquiry..."></textarea>
+        </div>
+        <button class="submit-btn">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#home" class="nav-logo" style="text-decoration:none">
+          <div class="nav-logo-mark">LR</div>
+          <span class="nav-logo-text">LEARNIX <span>LAB</span></span>
+        </a>
+        <p>Advancing the science of learning through rigorous research, AI innovation, and cross-disciplinary collaboration.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Research</h5>
+        <ul>
+          <li><a href="#research">Machine Learning</a></li>
+          <li><a href="#research">NLP</a></li>
+          <li><a href="#research">Cognitive Science</a></li>
+          <li><a href="#research">AI Ethics</a></li>
+          <li><a href="#research">EdTech</a></li>
+          <li><a href="learnix-certificate-verify.html">Certificate Verify</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Lab</h5>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#team">Team</a></li>
+          <li><a href="#publications">Publications</a></li>
+          <li><a href="#join">Join Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="https://scholar.google.com/citations?user=XXXXXXXXXXX&hl=en">Google Scholar</a></li>
+          <li><a href="https://www.researchgate.net/profile/Learnix-Research-Lab">ResearchGate</a></li>
+          <li><a href="https://github.com/Learnix-Research-Lab">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/company/learnix-research-lab">LinkedIn</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Learnix Research Lab. All rights reserved.</span>
+      <span>Built with 🔬 in Dhaka, Bangladesh</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
+    })
+  });
+  document.querySelector('.submit-btn').addEventListener('click',function(){
+    this.textContent='Message Sent! ✓';
+    this.style.background='linear-gradient(90deg,#059669,#10b981)';
+    setTimeout(()=>{this.textContent='Send Message →';this.style.background=''},3000)
+  });
+  function toggleMenu() {
+  document.querySelector('.nav-links').classList.toggle('active');
+}
+</script>
+</body>
+</html>

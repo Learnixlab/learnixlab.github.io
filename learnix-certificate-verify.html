@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Certificate Verification — Learnix Research Lab</title>
+    <link
+      rel="icon"
+      type="Certification\logo.png"
+      sizes="32x32"
+      href="logo.png"
+    />
+    <link
+      rel="icon"
+      type="Certification\logo.png"
+      sizes="16x16"
+      href="logo.png"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --navy: #0d1b3e;
+        --blue: #1a56db;
+        --mid: #2563eb;
+        --cyan: #06b6d4;
+        --teal: #14b8a6;
+        --white: #ffffff;
+        --off: #f8fafc;
+        --text: #1e293b;
+        --muted: #64748b;
+        --border: #e2e8f0;
+        --green: #22c55e;
+        --red: #ef4444;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--navy);
+        color: #fff;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* BG EFFECTS */
+      .bg-layer {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            ellipse 800px 600px at 70% 20%,
+            rgba(37, 99, 235, 0.15) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 500px 400px at 10% 80%,
+            rgba(6, 182, 212, 0.08) 0%,
+            transparent 60%
+          );
+      }
+      .bg-grid {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px
+          );
+        background-size: 60px 60px;
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: rgba(13, 27, 62, 0.95);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      }
+ .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px; gap: 16px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; }
+  .nav-logo-text .lab-name { font-size: 18px; font-weight: 700; color: var(--primary); letter-spacing: 1px; line-height: 1; }
+  .nav-logo-text .lab-sub { font-size: 10px; color: var(--muted); letter-spacing: 3px; text-transform: uppercase; }
+  .nav-badge {
+    background: linear-gradient(135deg, rgba(0,195,255,0.15), rgba(123,47,255,0.15));
+    border: 1px solid var(--border);
+    color: var(--primary); font-size: 12px; font-weight: 500;
+    padding: 6px 14px; border-radius: 20px; letter-spacing: 0.5px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-badge::before { content: '🔐'; font-size: 13px; }
+      .nav-badge {
+        background: rgba(6, 182, 212, 0.15);
+        border: 1px solid rgba(6, 182, 212, 0.3);
+        color: var(--cyan);
+        padding: 0.3rem 0.75rem;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+      .nav-back {
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: color 0.2s;
+      }
+      .nav-back:hover {
+        color: var(--cyan);
+      }
+
+      /* MAIN LAYOUT */
+      main {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 100px 1.5rem 4rem;
+      }
+
+      /* HERO HEADER */
+      .hero-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        max-width: 600px;
+      }
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(6, 182, 212, 0.1);
+        border: 1px solid rgba(6, 182, 212, 0.25);
+        color: var(--cyan);
+        padding: 0.4rem 1rem;
+        border-radius: 100px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        margin-bottom: 1.2rem;
+      }
+      .hero-tag::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: var(--cyan);
+        border-radius: 50%;
+        animation: blink 2s infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      .hero-header h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2rem, 5vw, 2.8rem);
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.5px;
+        margin-bottom: 1rem;
+      }
+      .hero-header h1 .grad {
+        background: linear-gradient(90deg, #60a5fa, var(--cyan));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hero-header p {
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 0.95rem;
+        line-height: 1.8;
+        font-weight: 300;
+      }
+
+      /* SEARCH BOX */
+      .search-box {
+        width: 100%;
+        max-width: 620px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
+      }
+      .search-label {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.8rem;
+        font-weight: 500;
+      }
+      .search-row {
+        display: flex;
+        gap: 0.75rem;
+      }
+      .search-input {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 10px;
+        padding: 0.85rem 1.1rem;
+        color: #fff;
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        font-weight: 500;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.25);
+        font-size: 0.9rem;
+        letter-spacing: 0.3px;
+        font-weight: 300;
+      }
+      .search-input:focus {
+        border-color: var(--cyan);
+        box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+      }
+      .search-btn {
+        background: linear-gradient(90deg, var(--blue), var(--cyan));
+        border: none;
+        border-radius: 10px;
+        padding: 0.85rem 1.6rem;
+        color: #fff;
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .search-btn:hover {
+        opacity: 0.88;
+        transform: translateY(-1px);
+      }
+      .search-btn:active {
+        transform: translateY(0);
+      }
+      .search-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+      .search-hint {
+        margin-top: 0.9rem;
+        font-size: 0.78rem;
+        color: rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* LOADING */
+      .loading {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 620px;
+      }
+      .loading.show {
+        display: flex;
+      }
+      .spinner {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 3px solid rgba(6, 182, 212, 0.2);
+        border-top-color: var(--cyan);
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .loading p {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.9rem;
+      }
+
+      /* RESULT AREA */
+      #result {
+        width: 100%;
+        max-width: 680px;
+      }
+
+      /* SUCCESS CARD */
+      .cert-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        overflow: hidden;
+        animation: fadeUp 0.4s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .cert-card-header {
+        background: linear-gradient(
+          135deg,
+          rgba(37, 99, 235, 0.3),
+          rgba(6, 182, 212, 0.2)
+        );
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 1.2rem 1.8rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .verified-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(34, 197, 94, 0.15);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        color: #86efac;
+        padding: 0.45rem 1rem;
+        border-radius: 100px;
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
+      .cert-id-label {
+        margin-left: auto;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-weight: 400;
+        letter-spacing: 0.5px;
+      }
+      .cert-id-val {
+        color: var(--cyan);
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+
+      .cert-body {
+        padding: 2rem 1.8rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: start;
+      }
+
+      .cert-image-wrap {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        overflow: hidden;
+        aspect-ratio: 4/3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .cert-image-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .cert-image-wrap .no-img {
+        color: rgba(255, 255, 255, 0.2);
+        font-size: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .cert-image-wrap .no-img span {
+        font-size: 0.75rem;
+        font-weight: 400;
+      }
+
+      .cert-details {
+      }
+      .cert-name {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.2;
+        margin-bottom: 0.3rem;
+      }
+      .cert-course {
+        font-size: 0.95rem;
+        color: var(--cyan);
+        font-weight: 500;
+        margin-bottom: 1.4rem;
+      }
+      .detail-row {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin-bottom: 0.8rem;
+      }
+      .detail-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 7px;
+        background: rgba(255, 255, 255, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .detail-content .dlabel {
+        font-size: 0.72rem;
+        color: rgba(255, 255, 255, 0.35);
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        margin-bottom: 1px;
+      }
+      .detail-content .dval {
+        font-size: 0.88rem;
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 400;
+      }
+
+      .cert-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        padding: 1.2rem 1.8rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .share-btn {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        cursor: pointer;
+        border: none;
+        font-family: "DM Sans", sans-serif;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .share-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+      }
+      .cert-stamp {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.3);
+      }
+      .stamp-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--green);
+      }
+
+      /* ERROR CARD */
+      .error-card {
+        background: rgba(239, 68, 68, 0.05);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 20px;
+        padding: 2.5rem;
+        text-align: center;
+        animation: fadeUp 0.35s ease both;
+      }
+      .error-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      .error-card h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #fca5a5;
+        margin-bottom: 0.5rem;
+      }
+      .error-card p {
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 0.88rem;
+        line-height: 1.7;
+      }
+
+      /* HOW IT WORKS */
+      .how-section {
+        width: 100%;
+        max-width: 620px;
+        margin-top: 3rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        padding-top: 2.5rem;
+      }
+      .how-title {
+        font-family: "Syne", sans-serif;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.35);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+      .how-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .how-item {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 14px;
+        padding: 1.2rem 1rem;
+        text-align: center;
+      }
+      .how-num {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--blue), var(--cyan));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.8rem;
+        color: #fff;
+        margin: 0 auto 0.7rem;
+      }
+      .how-item h4 {
+        font-family: "Syne", sans-serif;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.3rem;
+      }
+      .how-item p {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.35);
+        line-height: 1.6;
+      }
+
+      /* FOOTER */
+      .page-footer {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 2rem;
+        color: rgba(255, 255, 255, 0.25);
+        font-size: 0.78rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .page-footer a {
+        color: var(--cyan);
+        text-decoration: none;
+      }
+
+      @media (max-width: 600px) {
+        .search-row {
+          flex-direction: column;
+        }
+        .cert-body {
+          grid-template-columns: 1fr;
+        }
+        .how-grid {
+          grid-template-columns: 1fr;
+        }
+        .cert-footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-layer"></div>
+    <div class="bg-grid"></div>
+
+    <!-- NAV -->
+    <nav>
+<div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <img src="Certification\logo.png"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+             alt="Learnix Logo">
+        <div style="display:none;width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#00C3FF,#7B2FFF);align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff">L</div>
+        <div class="nav-logo-text">
+          <div class="lab-name">LEARNIX</div>
+          <div class="lab-sub">Research Lab</div>
+        </div>
+      </a>
+      <div class="nav-badge">Offer Verification Portal</div>
+      <a href="index.html" class="nav-back">← Main Site</a>
+    </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main>
+      <!-- HERO -->
+      <div class="hero-header">
+        <div class="hero-tag">Learnix Research Lab · Official System</div>
+        <h1>
+          Verify a <span class="grad">Researcher<br />Certificate</span>
+        </h1>
+        <p>
+          Enter the Certificate ID found on any Learnix-issued certificate to
+          instantly verify its authenticity, holder details, and completion
+          record.
+        </p>
+      </div>
+
+      <!-- SEARCH -->
+      <div class="search-box">
+        <div class="search-label">Certificate ID</div>
+        <div class="search-row">
+          <input
+            class="search-input"
+            type="text"
+            id="certId"
+            placeholder="e.g. LRL-2025-00124"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="search-btn" id="searchBtn" onclick="verify()">
+            <span id="btnIcon">🔍</span>
+            <span id="btnText">Verify</span>
+          </button>
+        </div>
+        <div class="search-hint">
+          ℹ️ Certificate IDs are printed on the bottom of every Learnix
+          certificate
+        </div>
+      </div>
+
+      <!-- LOADING -->
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Searching certificate database…</p>
+      </div>
+
+      <!-- RESULT -->
+      <div id="result"></div>
+
+      <!-- HOW IT WORKS -->
+      <div class="how-section">
+        <div class="how-title">How verification works</div>
+        <div class="how-grid">
+          <div class="how-item">
+            <div class="how-num">1</div>
+            <h4>Enter ID</h4>
+            <p>Type the unique Certificate ID from your Learnix document</p>
+          </div>
+          <div class="how-item">
+            <div class="how-num">2</div>
+            <h4>Instant Lookup</h4>
+            <p>We query our secure Firebase database in real-time</p>
+          </div>
+          <div class="how-item">
+            <div class="how-num">3</div>
+            <h4>View Result</h4>
+            <p>See full certificate details including name, course, and date</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      © 2025 <a href="index.html">Learnix Research Lab</a> · All
+      certificates are issued and verified through our secure database · Dhaka,
+      Bangladesh
+    </footer>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBaF3qpgyJRBw6600oUpT44HTJCLgfDWsI",
+        authDomain: "learnix-research-lab-796a4.firebaseapp.com",
+        projectId: "learnix-research-lab-796a4",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      function formatDate(val) {
+        if (!val) return null;
+        if (val.toDate)
+          return val.toDate().toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          });
+        if (typeof val === "string") return val;
+        return null;
+      }
+
+      window.verify = async function () {
+        const rawId = document.getElementById("certId").value.trim();
+        const id = rawId.toUpperCase();
+        const result = document.getElementById("result");
+        const loading = document.getElementById("loading");
+        const btn = document.getElementById("searchBtn");
+        const btnText = document.getElementById("btnText");
+        const btnIcon = document.getElementById("btnIcon");
+
+        if (!id) {
+          result.innerHTML = `<div class="error-card"><div class="error-icon">⚠️</div><h3>No ID Entered</h3><p>Please enter a Certificate ID to search.</p></div>`;
+          return;
+        }
+
+        // loading state
+        result.innerHTML = "";
+        loading.classList.add("show");
+        btn.disabled = true;
+        btnText.textContent = "Searching…";
+        btnIcon.textContent = "⏳";
+
+        try {
+          const docRef = doc(db, "certificates", id);
+          const docSnap = await getDoc(docRef);
+
+          loading.classList.remove("show");
+          btn.disabled = false;
+          btnText.textContent = "Verify";
+          btnIcon.textContent = "🔍";
+
+          if (docSnap.exists()) {
+            const d = docSnap.data();
+            const name = d.Name || d.name || "—";
+            const course = d.Course || d.course || "—";
+            const date = formatDate(
+              d.Date || d.date || d.issueDate || d.IssueDate,
+            );
+            const grade = d.Grade || d.grade || null;
+            const duration = d.Duration || d.duration || null;
+            const mentor = d.Mentor || d.mentor || null;
+            const imageUrl = d.image || d.Image || null;
+            const role = d.role || null;
+            const institution = d.institution || null;
+            const skills = d.skills || [];
+            const pdfUrl = d.pdf || null;
+            const status = d.status || "valid";
+            const now = new Date().toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            });
+
+            result.innerHTML = `
+        <div class="cert-card">
+          <div class="cert-card-header">
+            <div class="verified-badge">✅ Verified Certificate</div>
+            <div class="cert-id-label">Certificate ID &nbsp;<span class="cert-id-val">${id}</span></div>
+          </div>
+          <div class="cert-body">
+            <div class="cert-image-wrap">
+              ${
+                imageUrl
+                  ? `<img src="${imageUrl}" alt="Certificate of ${name}" onerror="this.parentElement.innerHTML='<div class=\\'no-img\\'>🎓<span>No image</span></div>'">`
+                  : `<div class="no-img">🎓<span>No image</span></div>`
+              }
+            </div>
+            <div class="cert-details">
+              <div class="cert-name">${name}</div>
+              <div class="cert-course">${course}</div>
+              ${
+                date
+                  ? `
+              <div class="detail-row">
+                <div class="detail-icon">📅</div>
+                <div class="detail-content">
+                  <div class="dlabel">Issue Date</div>
+                  <div class="dval">${date}</div>
+                </div>
+              </div>`
+                  : ""
+              }
+              ${
+                grade
+                  ? `
+              <div class="detail-row">
+                <div class="detail-icon">🏆</div>
+                <div class="detail-content">
+                  <div class="dlabel">Grade / Result</div>
+                  <div class="dval">${grade}</div>
+                </div>
+              </div>`
+                  : ""
+              }
+              ${
+                duration
+                  ? `
+              <div class="detail-row">
+                <div class="detail-icon">⏱️</div>
+                <div class="detail-content">
+                  <div class="dlabel">Duration</div>
+                  <div class="dval">${duration}</div>
+                </div>
+              </div>`
+                  : ""
+              }
+              ${
+                mentor
+                  ? `
+              <div class="detail-row">
+                <div class="detail-icon">👨‍🔬</div>
+                <div class="detail-content">
+                  <div class="dlabel">Mentor / Supervisor</div>
+                  <div class="dval">${mentor}</div>
+                </div>
+              </div>`
+                  : ""
+              }
+              <div class="detail-row">
+                <div class="detail-icon">🏛️</div>
+                <div class="detail-content">
+                  <div class="dlabel">Issuing Institution</div>
+                  <div class="dval">Learnix Research Lab, Dhaka</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cert-footer">
+            <div class="cert-stamp">
+              <div class="stamp-dot"></div>
+              Verified on ${now} via Learnix Official System
+            </div>
+            <button class="share-btn" onclick="copyLink('${id}')">📋 Copy Verify Link</button>
+            <button class="share-btn" onclick="downloadCert('${imageUrl}', '${name}')"> ⬇ Download Certificate </button>
+          </div>
+        </div>
+      `;
+          } else {
+            result.innerHTML = `
+        <div class="error-card">
+          <div class="error-icon">❌</div>
+          <h3>Certificate Not Found</h3>
+          <p>No certificate with ID <strong style="color:#fca5a5">${id}</strong> exists in our database.<br>
+          Please double-check the ID and try again. If you believe this is an error, contact us at <a href="mailto:Learnixresearchlab@gmail.com" style="color:var(--cyan)">learnixresearchlab@gmail.com</a></p>
+        </div>
+      `;
+          }
+        } catch (err) {
+          loading.classList.remove("show");
+          btn.disabled = false;
+          btnText.textContent = "Verify";
+          btnIcon.textContent = "🔍";
+          result.innerHTML = `
+      <div class="error-card">
+        <div class="error-icon">⚠️</div>
+        <h3>Connection Error</h3>
+        <p>Could not reach the verification database. Please check your internet connection and try again.<br><br>
+        <small style="opacity:0.4">${err.message}</small></p>
+      </div>
+    `;
+        }
+      };
+
+      window.copyLink = function (id) {
+        const url = `${window.location.origin}${window.location.pathname}?id=${id}`;
+        navigator.clipboard.writeText(url).then(() => {
+          const btn = document.querySelector(".share-btn");
+          if (btn) {
+            btn.textContent = "✅ Copied!";
+            setTimeout(() => (btn.textContent = "📋 Copy Verify Link"), 2000);
+          }
+        });
+      };
+      window.downloadCert = function (url, name) {
+        if (!url) {
+          alert("No certificate available");
+          return;
+        }
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = name + "-certificate.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+      // Auto-verify if ID is in URL query param
+      const params = new URLSearchParams(window.location.search);
+      const preId = params.get("id");
+      if (preId) {
+        document.getElementById("certId").value = preId;
+        window.verify();
+      }
+
+      // Allow Enter key to trigger verify
+      document.getElementById("certId").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") window.verify();
+      });
+    </script>
+  </body>
+</html>

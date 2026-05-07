@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offer Letter Verification — Learnix Research Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary: #00C3FF;
+    --primary-dark: #0082B3;
+    --accent: #1a6fd4;
+    --purple: #7B2FFF;
+    --gold: #FFD700;
+    --bg: #05080f;
+    --surface: #0d1117;
+    --surface2: #121820;
+    --border: rgba(0,195,255,0.15);
+    --text: #e8eaf0;
+    --muted: #7a8899;
+    --green: #00e676;
+    --red: #ff5252;
+    --radius: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── BACKGROUND ─── */
+  .bg-canvas {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  .bg-orb {
+    position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.18;
+    animation: orbFloat 8s ease-in-out infinite;
+  }
+  .orb1 { width: 600px; height: 600px; background: #00C3FF; top: -200px; left: -150px; }
+  .orb2 { width: 400px; height: 400px; background: #7B2FFF; bottom: -100px; right: -100px; animation-delay: -4s; }
+  .orb3 { width: 300px; height: 300px; background: #1a6fd4; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: -2s; }
+  .grid-overlay {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,195,255,0.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,195,255,0.04) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  @keyframes orbFloat {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  /* ─── LAYOUT ─── */
+  .wrapper { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; }
+
+  /* ─── NAVBAR ─── */
+  .navbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(5,8,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px; gap: 16px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; }
+  .nav-logo-text .lab-name { font-size: 18px; font-weight: 700; color: var(--primary); letter-spacing: 1px; line-height: 1; }
+  .nav-logo-text .lab-sub { font-size: 10px; color: var(--muted); letter-spacing: 3px; text-transform: uppercase; }
+  .nav-badge {
+    background: linear-gradient(135deg, rgba(0,195,255,0.15), rgba(123,47,255,0.15));
+    border: 1px solid var(--border);
+    color: var(--primary); font-size: 12px; font-weight: 500;
+    padding: 6px 14px; border-radius: 20px; letter-spacing: 0.5px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-badge::before { content: '🔐'; font-size: 13px; }
+
+  /* ─── MAIN CONTENT ─── */
+  .main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 40px 20px 60px; }
+
+  /* ─── PAGE HEADER ─── */
+  .page-header { text-align: center; margin-bottom: 40px; max-width: 600px; }
+  .page-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,195,255,0.1); border: 1px solid rgba(0,195,255,0.25);
+    color: var(--primary); font-size: 12px; font-weight: 600;
+    padding: 6px 16px; border-radius: 20px; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .page-header h1 { font-size: clamp(26px,5vw,42px); font-weight: 800; line-height: 1.2; }
+  .page-header h1 span { color: var(--primary); }
+  .page-header p { color: var(--muted); margin-top: 12px; font-size: 15px; line-height: 1.7; }
+
+  /* ─── CARD ─── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px;
+    width: 100%; max-width: 560px;
+    box-shadow: 0 0 60px rgba(0,195,255,0.06), 0 20px 60px rgba(0,0,0,0.4);
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--purple), var(--gold));
+  }
+
+  /* ─── FORM ─── */
+  .form-label { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 8px; display: block; }
+  .input-wrap { position: relative; }
+  .input-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; pointer-events: none; }
+  .input-wrap input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px; font-weight: 500;
+    padding: 14px 16px 14px 46px;
+    outline: none;
+    transition: all 0.3s;
+  }
+  .input-wrap input::placeholder { color: #3d5060; }
+  .input-wrap input:focus {
+    border-color: var(--primary);
+    background: rgba(0,195,255,0.05);
+    box-shadow: 0 0 0 3px rgba(0,195,255,0.1);
+  }
+
+  .btn-verify {
+    width: 100%; margin-top: 20px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border: none; border-radius: 12px;
+    color: #fff; font-family: 'Poppins', sans-serif;
+    font-size: 15px; font-weight: 700;
+    padding: 15px 24px;
+    cursor: pointer; letter-spacing: 0.5px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .btn-verify:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,195,255,0.35); }
+  .btn-verify:active { transform: translateY(0); }
+  .btn-verify:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .btn-verify .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ─── DIVIDER ─── */
+  .divider { display: flex; align-items: center; gap: 12px; margin: 28px 0 0; }
+  .divider-line { flex: 1; height: 1px; background: var(--border); }
+  .divider span { font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-steps { display: flex; gap: 0; margin-top: 20px; }
+  .how-step {
+    flex: 1; text-align: center; position: relative;
+    padding: 14px 8px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-right: none;
+  }
+  .how-step:first-child { border-radius: 12px 0 0 12px; }
+  .how-step:last-child { border-radius: 0 12px 12px 0; border-right: 1px solid var(--border); }
+  .how-step .step-num { font-size: 22px; margin-bottom: 6px; }
+  .how-step p { font-size: 10px; color: var(--muted); line-height: 1.4; font-weight: 500; }
+
+  /* ─── RESULT ─── */
+  #result { margin-top: 28px; }
+
+  /* ─── SUCCESS CARD ─── */
+  .result-success {
+    background: rgba(0,230,118,0.05);
+    border: 1px solid rgba(0,230,118,0.2);
+    border-radius: 16px; padding: 28px; text-align: center;
+    animation: fadeSlideIn 0.5s ease;
+  }
+  .result-success .verified-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,230,118,0.1); border: 1px solid rgba(0,230,118,0.3);
+    color: var(--green); font-size: 13px; font-weight: 700;
+    padding: 8px 20px; border-radius: 30px; margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+  .member-photo {
+    width: 90px; height: 90px; border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--green);
+    margin: 0 auto 16px; display: block;
+    box-shadow: 0 0 20px rgba(0,230,118,0.3);
+  }
+  .member-name { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .member-pos { font-size: 13px; color: var(--primary); font-weight: 500; margin-bottom: 16px; }
+  .member-details {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; text-align: left;
+  }
+  .detail-item {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 14px;
+  }
+  .detail-label { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+  .detail-value { font-size: 13px; color: var(--text); font-weight: 600; }
+  .btn-view-letter {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, rgba(0,195,255,0.15), rgba(0,195,255,0.05));
+    border: 1px solid rgba(0,195,255,0.3);
+    color: var(--primary); text-decoration: none;
+    padding: 12px 24px; border-radius: 10px;
+    font-size: 13px; font-weight: 600; font-family: 'Poppins', sans-serif;
+    cursor: pointer; transition: all 0.3s; width: 100%; justify-content: center;
+    margin-top: 4px;
+  }
+  .btn-view-letter:hover { background: rgba(0,195,255,0.2); transform: translateY(-1px); }
+
+  /* ─── ERROR CARD ─── */
+  .result-error {
+    background: rgba(255,82,82,0.05);
+    border: 1px solid rgba(255,82,82,0.2);
+    border-radius: 16px; padding: 28px; text-align: center;
+    animation: fadeSlideIn 0.4s ease;
+  }
+  .error-icon { font-size: 48px; margin-bottom: 12px; }
+  .result-error h3 { color: var(--red); font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .result-error p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── INFO CARDS ─── */
+  .info-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    max-width: 560px; width: 100%; margin: 40px 0;
+  }
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 22px 16px; text-align: center;
+  }
+  .info-card .ic-icon { font-size: 28px; margin-bottom: 10px; }
+  .info-card h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+  .info-card p { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    border-top: 1px solid var(--border);
+    background: rgba(5,8,15,0.6);
+    backdrop-filter: blur(10px);
+    padding: 28px 24px;
+    text-align: center;
+    position: relative; z-index: 1;
+  }
+  .footer-logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 10px; text-decoration: none; }
+  .footer-logo img { width: 36px; height: 36px; border-radius: 8px; }
+  .footer-logo span { font-size: 15px; font-weight: 700; color: var(--primary); letter-spacing: 1px; }
+  .footer p { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.7; }
+  .footer a { color: var(--primary); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer-bottom { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 11px; color: #3d5060; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .card { padding: 28px 20px; border-radius: 20px; }
+    .info-grid { grid-template-columns: 1fr; gap: 12px; }
+    .member-details { grid-template-columns: 1fr; }
+    .how-steps { flex-direction: column; gap: 8px; }
+    .how-step { border-right: 1px solid var(--border); border-bottom: none; border-radius: 10px !important; }
+    .how-step:not(:last-child) { border-bottom: none; }
+    .nav-badge { font-size: 11px; padding: 5px 10px; }
+  }
+  @media (max-width: 400px) {
+    .page-header h1 { font-size: 22px; }
+    .card { padding: 22px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-canvas">
+  <div class="bg-orb orb1"></div>
+  <div class="bg-orb orb2"></div>
+  <div class="bg-orb orb3"></div>
+  <div class="grid-overlay"></div>
+</div>
+
+<div class="wrapper">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <img src="Certification\logo.png"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+             alt="Learnix Logo">
+        <div style="display:none;width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#00C3FF,#7B2FFF);align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff">L</div>
+        <div class="nav-logo-text">
+          <div class="lab-name">LEARNIX</div>
+          <div class="lab-sub">Research Lab</div>
+        </div>
+      </a>
+      <div class="nav-badge">Offer Verification Portal</div>
+      <a href="index.html" class="nav-back">← Main Site</a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Header -->
+    <div class="page-header">
+      <div class="page-tag">🔐 Secure Verification</div>
+      <h1>Offer Letter<br><span>Verification System</span></h1>
+      <p>Instantly verify the authenticity of any offer letter issued by Learnix Research Lab using your unique Offer ID.</p>
+    </div>
+
+    <!-- Verification Card -->
+    <div class="card">
+      <label class="form-label" for="offerId">ENTER YOUR OFFER ID</label>
+      <div class="input-wrap">
+        <span class="input-icon">🔑</span>
+        <input
+          type="text"
+          id="offerId"
+          placeholder="e.g. OFR-"
+          autocomplete="off"
+          onkeydown="if(event.key==='Enter')searchOffer()"
+        >
+      </div>
+
+      <button class="btn-verify" id="verifyBtn" onclick="searchOffer()">
+        <div class="spinner" id="spinner"></div>
+        <span id="btnText">🔍 Verify Offer Letter</span>
+      </button>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <span>How It Works</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="step-num">1️⃣</div>
+          <p>Enter your Offer ID from the letter</p>
+        </div>
+        <div class="how-step">
+          <div class="step-num">2️⃣</div>
+          <p>Click Verify to check the database</p>
+        </div>
+        <div class="how-step">
+          <div class="step-num">3️⃣</div>
+          <p>View your verified details instantly</p>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div id="result"></div>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="ic-icon">🛡️</div>
+        <h4>Tamper-Proof</h4>
+        <p>All records are securely stored and cannot be modified.</p>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">⚡</div>
+        <h4>Instant Results</h4>
+        <p>Verification happens in real-time from our secure database.</p>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">📄</div>
+        <h4>Official Records</h4>
+        <p>Only authentic lab-issued letters appear in verification.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <a class="footer-logo" href="#">
+      <img src="Certification\logo.png"
+           onerror="this.style.display='none'"
+           alt="Logo">
+      <span>LEARNIX RESEARCH LAB</span>
+    </a>
+    <p>Dhaka, Bangladesh</p>
+    <p>📧 <a href="mailto:learnixresearchlab@gmail.com">learnixresearchlab@gmail.com</a> &nbsp;|&nbsp; 🌐 <a href="#">learnixresearchlab.com</a></p>
+    <div class="footer-bottom">© 2025 Learnix Research Lab. All rights reserved. | Offer Letter Verification Portal</div>
+  </footer>
+
+</div>
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBaF3qpgyJRBw6600oUpT44HTJCLgfDWsI",
+    authDomain: "learnix-research-lab-796a4.firebaseapp.com",
+    databaseURL: "https://learnix-research-lab-796a4-default-rtdb.firebaseio.com",
+    projectId: "learnix-research-lab-796a4",
+    storageBucket: "learnix-research-lab-796a4.firebasestorage.app",
+    messagingSenderId: "265051477953",
+    appId: "1:265051477953:web:ace21f0ba5e5b350124140"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.searchOffer = async function () {
+    const id = document.getElementById("offerId").value.trim();
+    const result = document.getElementById("result");
+    const btn = document.getElementById("verifyBtn");
+    const spinner = document.getElementById("spinner");
+    const btnText = document.getElementById("btnText");
+
+    if (!id) {
+      result.innerHTML = `
+        <div class="result-error" style="padding:18px">
+          <div style="font-size:30px;margin-bottom:8px">⚠️</div>
+          <h3 style="font-size:15px;margin-bottom:4px">Empty Offer ID</h3>
+          <p>Please enter a valid Offer ID to verify.</p>
+        </div>`;
+      return;
+    }
+
+    // Loading state
+    btn.disabled = true;
+    spinner.style.display = 'block';
+    btnText.textContent = 'Verifying...';
+    result.innerHTML = '';
+
+    try {
+      const docRef = doc(db, "offerLetters", id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const d = docSnap.data();
+        const today = new Date().toLocaleDateString('en-BD', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        result.innerHTML = `
+          <div class="result-success">
+            <div class="verified-badge">✅ VERIFIED — Authentic Offer Letter</div>
+            ${d.image ? `<img src="${d.image}" class="member-photo" alt="Member Photo" onerror="this.style.display='none'">` : `<div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#00C3FF,#7B2FFF);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;margin:0 auto 16px">${(d.name||'?')[0]}</div>`}
+            <div class="member-name">${d.name || '—'}</div>
+            <div class="member-pos">${d.position || '—'}</div>
+            <div class="member-details">
+              <div class="detail-item">
+                <div class="detail-label">Department</div>
+                <div class="detail-value">${d.department || '—'}</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Offer ID</div>
+                <div class="detail-value" style="color:var(--primary)">${id}</div>
+              </div>
+              ${d.joinDate ? `<div class="detail-item"><div class="detail-label">Join Date</div><div class="detail-value">${d.joinDate}</div></div>` : ''}
+              ${d.duration ? `<div class="detail-item"><div class="detail-label">Duration</div><div class="detail-value">${d.duration}</div></div>` : ''}
+              <div class="detail-item" style="grid-column:1/-1">
+                <div class="detail-label">Verified On</div>
+                <div class="detail-value" style="color:var(--green)">${today}</div>
+              </div>
+            </div>
+            ${d.pdf ? `<a href="${d.pdf}" target="_blank" class="btn-view-letter">📄 View Official Offer Letter</a>` : ''}
+          </div>`;
+      } else {
+        result.innerHTML = `
+          <div class="result-error">
+            <div class="error-icon">❌</div>
+            <h3>Offer Letter Not Found</h3>
+            <p>No record matches the ID <strong style="color:var(--text)">"${id}"</strong>.<br>Please double-check the ID from your offer letter and try again. If the issue persists, contact us at <a href="mailto:learnixresearchlab@gmail.com" style="color:var(--primary)">learnixresearchlab@gmail.com</a>.</p>
+          </div>`;
+      }
+    } catch (err) {
+      result.innerHTML = `
+        <div class="result-error">
+          <div class="error-icon">⚠️</div>
+          <h3>Connection Error</h3>
+          <p>Unable to reach the verification server. Please check your internet connection and try again.</p>
+        </div>`;
+      console.error("Firebase error:", err);
+    } finally {
+      btn.disabled = false;
+      spinner.style.display = 'none';
+      btnText.textContent = '🔍 Verify Offer Letter';
+    }
+  };
+</script>
+</body>
+</html>

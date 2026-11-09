@@ -1,1 +1,26 @@
-[]
+[
+ {
+  "id": "d1794230377109",
+  "createdAt": 1794230377109,
+  "title": "Label-Free Test-Time Adaptation for Cross-Dataset Network Intrusion Detection",
+  "description": "This research investigates label-free test-time adaptation techniques to improve the generalization of Network Intrusion Detection Systems (NIDS) across different network environments and datasets.\n\nThe study focuses on addressing distribution shifts, class imbalance, and unseen attack types using unsupervised domain adaptation techniques. Three benchmark datasets—CIC-IDS2017, CSE-CIC-IDS2018, and UNSW-NB15—will be investigated through a unified feature schema.\n\nThe proposed framework explores batch-statistics adaptation, entropy minimization, source-free domain adaptation, feature alignment, and pseudo-label self-training. Additionally, drift detection mechanisms will be incorporated to determine when model adaptation is necessary.\n\nThe ultimate goal is to develop a robust, leakage-aware and practical intrusion detection framework capable of adapting to evolving network traffic without requiring labeled target-domain data.",
+  "domain": "Cybersecurity, Network Intrusion Detection, Machine Learning, Domain Adaptation, Unsupervised Learning, Test-Time Adaptation, Explainable AI",
+  "team": "Md. Rifat Hossen, Ezaz Alhmed Himel",
+  "status": "Ongoing",
+  "updates": "Research concept and methodology development completed. Identified three benchmark datasets (CIC-IDS2017, CSE-CIC-IDS2018, and UNSW-NB15). Currently preparing the common feature harmonization strategy, leakage-free evaluation protocol, and label-free adaptation framework. Dataset availability and licensing verification are planned as the next step.",
+  "published": true,
+  "updatedAt": 1794230377109
+ },
+ {
+  "id": "d1794230441587",
+  "createdAt": 1794230441587,
+  "title": "Cross-Subject and Cross-Dataset Generalization for Wearable Stress Detection Under Leakage-Free Evaluation",
+  "description": "This research investigates the generalization capability of machine learning and deep learning models for wearable-based stress detection under leakage-free evaluation protocols.\n\nThe study addresses data leakage and performance inflation caused by overlapping signal windows from the same subjects appearing in both training and testing sets. It aims to evaluate how well stress detection models generalize to unseen individuals and different wearable sensing devices.\n\nThe research will utilize multimodal physiological signals, including Blood Volume Pulse (BVP), Electrodermal Activity (EDA), skin temperature, and accelerometer data from publicly available datasets such as WESAD and other compatible wearable stress datasets.\n\nMultiple evaluation strategies, including random window splitting, subject-wise cross-validation, Leave-One-Subject-Out (LOSO), and cross-dataset testing, will be systematically compared. Furthermore, lightweight personalization and domain adaptation techniques will be explored using short calibration periods to improve model performance for new users.\n\nThe ultimate goal is to establish a reliable, reproducible, and leakage-free evaluation framework for developing generalized wearable stress detection systems suitable for real-world applications.",
+  "domain": "Artificial Intelligence, Machine Learning, Deep Learning, Healthcare AI, Wearable Computing, Physiological Signal Processing, Stress Detection, Cross-Subject Generalization, Domain Adaptation, Explainable AI",
+  "team": "Md. Rifat Hossen, Istiaque Ahmeed",
+  "status": "Ongoing",
+  "updates": "Research concept and experimental framework defined. Identified WESAD as the primary benchmark dataset and shortlisted additional public wearable stress datasets for cross-dataset evaluation. Currently developing the leakage-free experimental protocols, multimodal signal harmonization strategy, and subject-independent evaluation framework. The next phase will focus on dataset acquisition, preprocessing, baseline model implementation, and personalization experiments.",
+  "published": true,
+  "updatedAt": 1794230441587
+ }
+]

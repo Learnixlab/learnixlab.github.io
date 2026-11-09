@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apply | Learnix Research Lab</title>
+<meta name="description" content="Apply for research intern, assistant or trainee positions at Learnix Research Lab.">
+<meta property="og:title" content="Apply | Learnix Research Lab">
+<meta property="og:description" content="Apply for research intern, assistant or trainee positions at Learnix Research Lab.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+<header class="page-hero"><div class="wrap"><h1>Apply to join</h1><p>Choose a position, tell us about your background and upload your CV.</p></div></header>
+<section class="block"><div class="wrap"><form class="form" id="apply">
+<fieldset><legend>Position</legend><label>Applying for<select name="position" required><option>Research Intern</option><option>Research Assistant</option><option>Research Trainee</option></select></label></fieldset>
+<fieldset><legend>Personal information</legend><div class="row"><label>Full name<input name="name" required maxlength="100"></label><label>Email<input name="email" type="email" required maxlength="120"></label><label>Phone<input name="phone" type="tel" maxlength="30"></label><label>City and country<input name="location" maxlength="100"></label></div></fieldset>
+<fieldset><legend>Academic information</legend><div class="row"><label>Institution<input name="institution" required maxlength="150"></label><label>Department<input name="department" maxlength="100"></label><label>Current level<select name="level"><option>Undergraduate</option><option>Master’s</option><option>PhD</option><option>Graduate</option></select></label><label>CGPA<input name="cgpa" maxlength="10"></label></div><label>Research interests<input name="interests" maxlength="200"></label><label>Why do you want to join?<textarea name="statement" rows="5" required maxlength="3000"></textarea></label></fieldset>
+<fieldset><legend>CV</legend><label>Upload your CV (PDF, up to 700 KB)<input name="cv" type="file" accept="application/pdf" required></label></fieldset>
+<button class="btn" type="submit">Submit application</button><div id="out" role="status"></div></form></div></section>
+<div id="site-footer"></div>
+<script type="module" src="js/common.js"></script>
+<script type="module" src="js/forms.js"></script>
+</body>
+</html>

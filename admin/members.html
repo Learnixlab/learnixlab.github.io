@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
+<title>Team members | Learnix Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css"></head>
+<body><div id="root"></div>
+<script type="module">
+import '../js/common.js';
+import { crud } from '../js/admin.js';
+crud({ col: 'members', title: 'Team members', single: 'member', sort: (a, b) => (a.order || 99) - (b.order || 99),
+  columns: [{ key: 'name', label: 'Name' }, { key: 'role', label: 'Role' }, { key: 'title', label: 'Title' }],
+  fields: [{ name: 'name', label: 'Full name', required: true },
+    { name: 'role', label: 'Role', type: 'select', options: ['Advisor','Senior Advisor','Research Lead','Researcher','Assistant Researcher','Associate Researcher','Research Intern'] },
+    { name: 'title', label: 'Title or affiliation' }, { name: 'email', label: 'Email', type: 'email' }, { name: 'scholar', label: 'Google Scholar profile URL', type: 'url' }, { name: 'linkedin', label: 'LinkedIn profile URL', type: 'url' },
+    { name: 'bio', label: 'Short bio', type: 'textarea' }, { name: 'photo', label: 'Photo', type: 'file', accept: 'image/*' },
+    { name: 'order', label: 'Display order (1 = first)', type: 'number', default: 50 },
+    { name: 'featured', label: 'Show on the home page', type: 'checkbox' }] });
+</script></body></html>

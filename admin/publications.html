@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
+<title>Publications | Learnix Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css"></head>
+<body><div id="root"></div>
+<script type="module">
+import '../js/common.js';
+import { crud } from '../js/admin.js';
+crud({ col: 'publications', title: 'Publications', single: 'publication',
+  columns: [{ key: 'title', label: 'Title' }, { key: 'type', label: 'Type' }, { key: 'year', label: 'Year' }],
+  fields: [{ name: 'title', label: 'Title', required: true }, { name: 'authors', label: 'Authors', required: true },
+    { name: 'journal', label: 'Journal or conference', required: true },
+    { name: 'type', label: 'Type', type: 'select', options: ['Journal Article','Conference Paper','Book Chapter'] },
+    { name: 'year', label: 'Year', type: 'number', default: new Date().getFullYear(), required: true },
+    { name: 'doi', label: 'DOI (e.g. 10.1000/xyz123)' }, { name: 'pdf', label: 'PDF link (https://…)', type: 'url' },
+    { name: 'link', label: 'External link (https://…)', type: 'url' },
+    { name: 'featured', label: 'Feature on the home page', type: 'checkbox' }] });
+</script></body></html>

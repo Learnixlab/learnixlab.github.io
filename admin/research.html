@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
+<title>Active research | Learnix Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css"></head>
+<body><div id="root"></div>
+<script type="module">
+import '../js/common.js';
+import { crud } from '../js/admin.js';
+crud({ col: 'research', title: 'Active research', single: 'project',
+  columns: [{ key: 'title', label: 'Project' }, { key: 'domain', label: 'Domain' }, { key: 'status', label: 'Project status' }],
+  fields: [{ name: 'title', label: 'Title', required: true }, { name: 'description', label: 'Description', type: 'textarea', required: true },
+    { name: 'domain', label: 'Research domain' }, { name: 'team', label: 'Research team (comma separated)' },
+    { name: 'status', label: 'Status', type: 'select', options: ['Planning','Ongoing','Completed','On Hold'] },
+    { name: 'updates', label: 'Latest update', type: 'textarea' }] });
+</script></body></html>

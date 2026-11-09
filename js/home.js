@@ -1,0 +1,11 @@
+import { list, published } from './db.js';
+import { esc, initials, safeImg, links } from './common.js';
+import { pubHTML } from './publications.js';
+const [m, p, r] = await Promise.all(['members', 'publications', 'research'].map(c => list(c).then(published).catch(() => [])));
+document.getElementById('stats').innerHTML = [[m.length, 'Members'], [p.length, 'Publications'], [r.length, 'Projects'], [r.filter(x => x.status === 'Ongoing').length, 'Ongoing now']].map(([n, l]) => `<div><strong>${n}</strong>${l}</div>`).join('');
+const fp = p.filter(x => x.featured).sort((a, b) => b.year - a.year).slice(0, 3);
+document.getElementById('pubs').innerHTML = fp.length ? fp.map(pubHTML).join('') : '<div class="empty">No featured publications yet.</div>';
+const fm = m.filter(x => x.featured).sort((a, b) => (a.order || 99) - (b.order || 99)).slice(0, 4);
+document.getElementById('people').innerHTML = fm.length ? fm.map(x => `<div class="card">${safeImg(x.photo) ? `<img class="avatar" src="${esc(x.photo)}" alt="">` : `<div class="avatar" aria-hidden="true">${esc(initials(x.name))}</div>`}<h3>${esc(x.name)}</h3><div class="role">${esc(x.role)}</div><p class="muted">${esc(x.title)}</p>${links(x)}</div>`).join('') : '<div class="empty">No featured researchers yet.</div>';
+const up = [...r].sort((a, b) => (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0)).slice(0, 3);
+document.getElementById('updates').innerHTML = up.length ? up.map(x => `<div class="card"><span class="tag st-${esc((x.status || '').replace(/\s/g, ''))}">${esc(x.status)}</span><h3 style="margin-top:10px">${esc(x.title)}</h3><p class="muted">${esc(x.updates || x.description)}</p></div>`).join('') : '<div class="empty">No updates yet.</div>';

@@ -1,13 +1,1 @@
-[
- {
-  "id": "r1",
-  "title": "Bangla Essay Feedback Engine",
-  "description": "An automatic feedback tool for secondary-school essays written in Bangla.",
-  "domain": "NLP",
-  "team": "Nusrat Jahan, Tanvir Hossain",
-  "status": "Ongoing",
-  "updates": "Pilot with three schools started this month.",
-  "published": true,
-  "createdAt": 1
- }
-]
+[]

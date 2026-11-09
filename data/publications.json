@@ -1,1 +1,77 @@
-[]
+[
+ {
+  "id": "d1794229293612",
+  "createdAt": 1794229293612,
+  "title": "Machine learning–assisted optimization of a terahertz photonic metamaterial absorber for blood cancer detection",
+  "authors": "Asad Miah, Sams Al Zafir, Joyonta Das, Jonayed Al-Faruk, Shadi Ihtiaj Zim, Rafi Ahmad, Md Rifat Hossen, SM Anowarul Haque, Abdul Wahed",
+  "journal": "PLoS One",
+  "type": "Journal Article",
+  "year": 2026,
+  "doi": "10.1371/journal.pone.0340492",
+  "pdf": "",
+  "link": "",
+  "featured": true,
+  "published": true,
+  "updatedAt": 1794229293612
+ },
+ {
+  "id": "d1794229359643",
+  "createdAt": 1794229359643,
+  "title": "Exploring the EmoBone Dataset with Bi-Directional LSTM for Emotion Recognition via Bone Conducted Speech",
+  "authors": "Md Sarwar Hosain, Md Rifat Hossen, Md Uzzal Mia, Yosuke Sugiura, Tetsuya Shimamura",
+  "journal": "NCSP'25 RISP International Workshop on Nonlinear Circuits, Communications and Signal Processing",
+  "type": "Conference Paper",
+  "year": 2025,
+  "doi": "",
+  "pdf": "https://mdrifat-hossen.github.io/files/pid_4.pdf",
+  "link": "",
+  "featured": false,
+  "published": true,
+  "updatedAt": 1794229359643
+ },
+ {
+  "id": "d1794229395738",
+  "createdAt": 1794229395738,
+  "title": "Facial Expression Recognition: A Machine Learning Approach with SVM, Random Forest, KNN, and Decision Tree Using Grid Search Method",
+  "authors": "Md Rifat Hossen, Md Uzzal Mia, Rinku Islam, Md Sarwar Hosain, Mohammad Kamrul Hasan, Tetsuya Shimamura",
+  "journal": "NCSP'25 RISP International Workshop on Nonlinear Circuits, Communications and Signal Processing 2025, February 27 - March 2, 2025, Pulau Pinang, Malaysia",
+  "type": "Conference Paper",
+  "year": 2025,
+  "doi": "",
+  "pdf": "",
+  "link": "https://www.researchgate.net/profile/Md-Mia-143/publication/389340345_Facial_Expression_Recognition_A_Machine_Learning_Approach_with_SVM_Random_Forest_KNN_and_Decision_Tree_Using_Grid_Search_Method/links/67befc88f5cb8f70d5c03fdc/Facial-Expression-Recognition-A-Machine-Learning-Approach-with-SVM-Random-Forest-KNN-and-Decision-Tree-Using-Grid-Search-Method.pdf",
+  "featured": false,
+  "published": true,
+  "updatedAt": 1794229395738
+ },
+ {
+  "id": "d1794229466259",
+  "createdAt": 1794229466259,
+  "title": "Explainable Machine Learning Framework for Detecting Lumpy Skin Disease with Environmental and Climate Factors",
+  "authors": "Md Rifat Hossen, Md Uzzal Mia, Md Noman Bhuiyan, Manik Kumar Saha, Rinku Islam, Md Sarwar Hosain",
+  "journal": "2025 IEEE 2nd International Conference on Computing, Applications and Systems (COMPAS)",
+  "type": "Conference Paper",
+  "year": 2026,
+  "doi": "10.1109/COMPAS67506.2025.11381718",
+  "pdf": "",
+  "link": "",
+  "featured": false,
+  "published": true,
+  "updatedAt": 1794229466259
+ },
+ {
+  "id": "d1794229563955",
+  "createdAt": 1794229563955,
+  "title": "Evaluating Targeted Productivity in Bangladesh’s Garment Sector Using Machine Learning and Deep Learning with Explainable AI: A Data-Driven Method for Enhanced Production Planning",
+  "authors": "Jonayed Al-Faruk, Md. Rifat Hossen, Joyonta Das, Ekram Hossain, Yeamin Safat, Ozifatun Jannat Akhi",
+  "journal": "International Conference on Big Data, IoT and Machine Learning",
+  "type": "Book Chapter",
+  "year": 2026,
+  "doi": "10.2139/ssrn.6358258",
+  "pdf": "",
+  "link": "",
+  "featured": false,
+  "published": true,
+  "updatedAt": 1794229563955
+ }
+]

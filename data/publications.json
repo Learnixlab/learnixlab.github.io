@@ -115,9 +115,9 @@
   "doi": "10.1109/COMPAS67506.2025.11381636",
   "pdf": "",
   "link": "",
-  "featured": true,
+  "featured": false,
   "published": true,
-  "updatedAt": 1794229913410
+  "updatedAt": 1795265931664
  },
  {
   "id": "d1794229947482",
@@ -222,6 +222,6 @@
   "link": "",
   "featured": true,
   "published": true,
-  "updatedAt": 1795265566757
+  "updatedAt": 1795265892848
  }
 ]

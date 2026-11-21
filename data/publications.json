@@ -208,5 +208,20 @@
   "featured": false,
   "published": true,
   "updatedAt": 1794230189939
+ },
+ {
+  "id": "d1795265566757",
+  "createdAt": 1795265566757,
+  "title": "Towards Explainable Plant Pathology: Vision Transformer-Based Grape Leaf Disease Classification with LIME and SHAP",
+  "authors": "Md. Rifat Hossen ,Jonayed Al-Faruk ,Sakiba Sarkar",
+  "journal": "Ubiquitous Technology Journal.",
+  "type": "Journal Article",
+  "year": 2026,
+  "doi": "10.71346/utj.v2i2.39",
+  "pdf": "https://crosslinkstudies.com/ubicc/index.php/utj/article/view/39/15",
+  "link": "",
+  "featured": true,
+  "published": true,
+  "updatedAt": 1795265566757
  }
 ]

@@ -25,5 +25,5 @@ if (header) {
 if (footer) footer.innerHTML = `<footer class="foot"><div class="wrap"><div class="cols">
   <div><h4>Learnix Research Lab</h4><p>Research in learning, language and intelligent systems.</p></div>
   <div><h4>Explore</h4>${PAGES.slice(1, 4).map(([h, l]) => `<a href="${h}">${l}</a>`).join('')}</div>
-  <div><h4>Join us</h4><a href="application.html">Apply</a><a href="contact.html">Collaborate</a><a href="admin/dashboard.html">Admin</a></div></div>
+  <div><h4>Join us</h4><a href="application.html">Apply</a><a href="contact.html">Collaborate</a></div></div>
   <div class="copy">© ${new Date().getFullYear()} Learnix Research Lab. All rights reserved.</div></div></footer>`;
